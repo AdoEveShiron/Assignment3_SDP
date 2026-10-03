@@ -1,3 +1,4 @@
+import bridge.render.AsciiRenderer;
 import bridge.render.RasterRenderer;
 import bridge.render.Renderer;
 import bridge.render.VectorRenderer;
@@ -25,6 +26,7 @@ public class Main {
     private static void runDemo() {
         runCombinationChecks();
         checkRuntimeSwitch();
+        runExtensionChecks();
         System.out.println("SUMMARY: " + passed + "/" + total + " PASS");
         if (passed != total) {
             System.exit(1);
@@ -40,6 +42,12 @@ public class Main {
         checkCombination("T3", new Square("S-1", SQUARE_SIDE, vector), vector, "VECTOR square side=3");
         checkCombination("T4", new Square("S-1", SQUARE_SIDE, raster), raster,
                 "RASTER square side=3 bitmap=3x3px");
+    }
+
+    private static void runExtensionChecks() {
+        Renderer ascii = new AsciiRenderer();
+        checkCombination("T6", new Circle("C-1", CIRCLE_RADIUS, ascii), ascii, "ASCII circle radius=2 art=(oo)");
+        checkCombination("T7", new Square("S-1", SQUARE_SIDE, ascii), ascii, "ASCII square side=3 art=[###]");
     }
 
     private static void checkCombination(String checkId, Shape shape, Renderer renderer, String expected) {
